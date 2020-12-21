@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
 
-
-// Script taken and evolved from: https://www.youtube.com/watch?v=KkYco_7-ULA&t=438s.
-
 namespace CameraController
 {
     [RequireComponent(typeof(CameraMovementInputManager))]
@@ -11,8 +8,8 @@ namespace CameraController
         public CameraMovementInputManager cm;
 
         [Header("Pan")]
-        public float amountToPan = 0.3f;            // how far camera will go on WASD press
-        public float panLerpSpeed = 10;             // the speed (frames) at which it will take to get there
+        public float amountToPan = 0.3f;            // How far camera will go on WASD press
+        public float panLerpSpeed = 10;             // The speed (frames) at which it will take to get there
         private Vector3 targetPanPosition;
         private bool panTowardsNewPosition;
 
@@ -24,8 +21,8 @@ namespace CameraController
         private Vector3 pointToOrbitRotation;
         private Quaternion targetRotation;
         private bool rotateToNewPosition;
-        [SerializeField] private float rotationX;
-        [SerializeField] private float rotationY;
+        private float rotationX;
+        private float rotationY;
 
         [Header("Zoom")]
         public float amountToZoom = 8;
@@ -34,8 +31,7 @@ namespace CameraController
         private bool zoomToNewPosition;
 
         private Vector3 mousePositionLastFrame;
-
-        public Vector3 cameraPositionLastFrame;
+        private Vector3 cameraPositionLastFrame;
 
         private void Awake()
         {
@@ -51,23 +47,15 @@ namespace CameraController
 
         private void Start()
         {
-            // So that variables don't start at 0. Otherwise camera will jump to a really low rotation (almost flat on ground) on button press.
             cm.SyncVariablesWithCamerasCurrentRotation(ref rotationX, ref rotationY);
-
-            // If player zooms at start of game before ever rotating, zoom needs this point to be defined
             pointToOrbitRotation = cm.GetOrbitPointForRotation();
-
-            // So that it's not null for first frame
             cameraPositionLastFrame = transform.position;
         }
 
         private void Update()
         {
-            // if (PauseButton.GamePaused)
-            //     return;
-
-            // Touches count as mouse clicks.So if this script is enabled and touch script is enabled, Unity will detect two clicks per frame which throws off calculations
 #if (UNITY_EDITOR)
+            // Touches count as mouse clicks. So if this script is enabled and touch input script is also enabled, Unity will detect two clicks per frame which throws off calculations.
             if (Input.touchCount != 0)
                 return;
 
@@ -139,9 +127,6 @@ namespace CameraController
                     Vector3 lastMousePosition = cm.ScreenToPlanePosition(mousePositionLastFrame);
                     Vector3 currentMousePosition = cm.ScreenToPlanePosition(Input.mousePosition);
                     float cameraCurrentSpeed = (currentMousePosition - lastMousePosition).magnitude;
-                    //Debug.Log(cameraCurrentSpeed);
-                    //if (cameraCurrentSpeed > 100)
-                    //    cameraCurrentSpeed = 100;
                     Vector3 cameraDirection = lastMousePosition - currentMousePosition;
                     cameraDirection.Normalize();
                     targetPanPosition = transform.position + cameraDirection * cameraCurrentSpeed;
@@ -185,9 +170,6 @@ namespace CameraController
             return true;
         }
 
-
-
-
         private float ClampZoomLevel()
         {
             if (targetZoomDistance > cm.maxAllowedZoom)
@@ -196,11 +178,8 @@ namespace CameraController
             else if (targetZoomDistance < cm.minAllowedZoom)
                 targetZoomDistance = cm.minAllowedZoom;
 
-            //Debug.Log(targetZoomDistance);
             return targetZoomDistance;
         }
-
-
 
         // WASD keys to pan camera around.
         private void GetKeyboardInput()
@@ -264,7 +243,7 @@ namespace CameraController
             panTowardsNewPosition = true;
         }
 
-        // Gets camera's forward direction and sets y axis to 0, so it never moves higher or lower, only forward/backwards
+        // Gets camera's forward direction and sets y axis to 0, so it never moves higher or lower, only forwards/backwards
         private Vector3 GetAdjustedForwardDirection()
         {
             Vector3 cameraForwardDir = transform.forward;
@@ -279,20 +258,13 @@ namespace CameraController
             return panAmount * transform.position.y;
         }
 
-
-
-
-
-
-
         // Set target rotation that camera will lerp towards
         // Use ref to make sure the rotation's new values when clamped are set globally so they work in Update().
         // Otherwise if the max rotation y is 90 and rotationY is 120, player will need to rotate finger down 30 degrees before camera starts rotating again.
         void SetCameraRotation(ref float rotationX, ref float rotationY)
         {
-            // Clamp rotation -- don't clamp if debug is true
             if (cm.debug_ignoreRotationBoundaries == false)
-                rotationY = cm.ClampRotationAngle(rotationY, cm.lowestAllowedRotationY, cm.highestAllowedRotationY);
+                rotationY = cm.ClampRotationAngle(rotationY, cm.lowestAllowedRotationY, cm.highestAllowedRotationY);        // Clamp rotation angles unless debug bool is true.
 
             targetRotation = Quaternion.Euler(rotationY, rotationX, 0);
             rotateToNewPosition = true;
@@ -304,7 +276,7 @@ namespace CameraController
         // Called every frame. Lerps camera towards target positions (panning, zooming, orbiting)
         private void MoveCameraToTargets()
         {
-            // Note: If player uses WASD to pan and then rotates at same time, camera will never reach targetPanPosition, which is why camera freaks out.
+            // Note: If player uses WASD to pan and then rotates at same time, camera will never reach targetPanPosition, which is why camera breaks.
             if (panTowardsNewPosition == true)
                 panTowardsNewPosition = cm.PanCameraToNewPanPosition(targetPanPosition, panLerpSpeed);
 
@@ -365,22 +337,5 @@ namespace CameraController
 
             return thisFrameRotation;
         }
-
-
-
-
-        public float GetCameraSpeed(Vector3 cameraPositionLastFrame)
-        {
-            //Vector3 touchPositionLastFrame = Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition;
-            float cameraCurrentSpeed = (transform.position - cameraPositionLastFrame).magnitude;
-
-            if (cameraCurrentSpeed > 100)
-                cameraCurrentSpeed = 100;
-
-            //Debug.Log(cameraCurrentSpeed);
-
-            return cameraCurrentSpeed;
-        }
     }
-
 }
