@@ -82,20 +82,14 @@ namespace CameraController
 
 
 #if (UNITY_EDITOR)
-
-            //cameraKeyboardInput.enabled = true;
-            //cameraTouchInput.enabled = true;
-
+            cameraKeyboardInput.enabled = true;
+            cameraTouchInput.enabled = true;
 #elif (UNITY_ANDROID || UNITY_IOS)
-
-        cameraTouchInput.enabled = true;
-        cameraKeyboardInput.enabled = false;
-
+            cameraTouchInput.enabled = true;
+            cameraKeyboardInput.enabled = false;
 #else
-
-        cameraKeyboardInput.enabled = true;
-        cameraTouchInput.enabled = false;
-
+            cameraKeyboardInput.enabled = true;
+            cameraTouchInput.enabled = false;
 #endif
         }
 
