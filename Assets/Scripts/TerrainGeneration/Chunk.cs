@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TerrainGenerator : MonoBehaviour
+public class Chunk : MonoBehaviour
 {
+    public GameObject temp;
+    
     // Start is called before the first frame update
     void Start()
     {
