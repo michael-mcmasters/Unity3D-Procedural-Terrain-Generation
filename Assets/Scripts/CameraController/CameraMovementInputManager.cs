@@ -216,8 +216,9 @@ namespace CameraController
             }
             else
             {
+                // Edge Case
                 PrepareGroundPlane();
-                throw new System.Exception("Camera doesn't know what point to orbit around because raycast didn't hit plane. It could be that this function was called before the plane was created.");
+                throw new System.Exception("Camera doesn't know what point to orbit around because raycast didn't hit the plane. Make sure the camera is facing towards the terrain or the raycast will miss.");
             }
 
             return pointToOrbitRotation;
