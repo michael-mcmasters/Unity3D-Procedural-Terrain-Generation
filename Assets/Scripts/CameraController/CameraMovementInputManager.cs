@@ -11,28 +11,26 @@ namespace CameraController
     {
         public CameraKeyboardInput cameraKeyboardInput;
         public CameraTouchInput cameraTouchInput;
-        //public TerrainGridData terrain;
         public TerrainGenerator terrain;
 
         public Camera mainCamera;
         public Plane groundPlane;
         public Plane cameraPlane;
 
-
         // The highest and lowest camera can rotate around the orbit point on its y axis (otherwise camera can do 360 loops)
         [Header("Rotation Bounds")]
         public int highestAllowedRotationY = 80;
-        public int lowestAllowedRotationY = 30;
+        public int lowestAllowedRotationY = 20;
 
         // How far camera can zoom towards or away from its orbit point
         [Header("Zoom Bounds")]
-        public float maxAllowedZoom = 100;
-        public float minAllowedZoom = 20;
+        public float maxAllowedZoom = 150;
+        public float minAllowedZoom = 60;
 
-        // When player is building a road and drags the end of it near the edge of the screen, these variables move camera in that direction
-        [Header("Drag Road To Edge Of Screen")]
-        public int dragEndOfRoad_EdgeScreenInputRange = 40;
-        public float dragEndOfRoad_EdgeScreenPanSpeed = 0.3f;
+        // When player is terraforming, and finger is close to edge of screen, these properties determine when and how fast to pan the camera in that direction.
+        [Header("Drag at Edge of Screen")]
+        public int edgeOfScreenPanRange = 40;
+        public float edgeOfScreenPanSpeed = 0.3f;
 
         [Header("Debug")]
         public bool allowDragToPan = true;
@@ -46,11 +44,9 @@ namespace CameraController
         private Vector3 cameraStartingPosition;
         private Quaternion cameraStartingRotation;
 
-        // Disabled when single finger input is needed for something else (such as building a road)
-        //public bool AllowDragToPan { get; set; } = true;
         public bool AllowDragToPan { set { allowDragToPan = value; } get { return allowDragToPan; } }
 
-        // Call this instead of Unity's Camera.Main, because that is liken to using GetComponent()
+        // Call this instead of Unity's Camera.Main, because that uses GetComponent() in the background. (Meaing it's really slow.)
         public Camera MainCamera { get => mainCamera; }
 
 
@@ -317,20 +313,20 @@ namespace CameraController
                 Vector3 direction = (clickPosition - centerOfGround).normalized;
 
                 Vector3 newPosition = transform.position;
-                newPosition += direction * dragEndOfRoad_EdgeScreenPanSpeed;
+                newPosition += direction * edgeOfScreenPanSpeed;
                 Vector3 newPositionOrbitPoint = ConvertNewPositionToOrbitPoint(newPosition);
                 if (CheckIfOrbitPointInBounds(newPositionOrbitPoint))
-                    transform.position += direction * dragEndOfRoad_EdgeScreenPanSpeed;
+                    transform.position += direction * edgeOfScreenPanSpeed;
             }
         }
 
         // Use mouse's pixel coordinates to determine if at edge of screen
         private bool MouseAtEdgeOfScreen()
         {
-            if (Input.mousePosition.x < dragEndOfRoad_EdgeScreenInputRange || Input.mousePosition.x > Screen.width - dragEndOfRoad_EdgeScreenInputRange)
+            if (Input.mousePosition.x < edgeOfScreenPanRange || Input.mousePosition.x > Screen.width - edgeOfScreenPanRange)
                 return true;
 
-            else if (Input.mousePosition.y < dragEndOfRoad_EdgeScreenInputRange || Input.mousePosition.y > Screen.height - dragEndOfRoad_EdgeScreenInputRange)
+            else if (Input.mousePosition.y < edgeOfScreenPanRange || Input.mousePosition.y > Screen.height - edgeOfScreenPanRange)
                 return true;
 
             return false;
