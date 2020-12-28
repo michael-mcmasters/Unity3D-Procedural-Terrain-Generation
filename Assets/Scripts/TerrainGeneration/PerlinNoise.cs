@@ -70,8 +70,8 @@ public class PerlinNoise : MonoBehaviour
 
     private Texture2D GenerateTexture()
     {
-        // offsetX = Random.Range(0, 99999);
-        // offsetY = Random.Range(0, 99999);
+        offsetX = Random.Range(0, 99999);
+        offsetY = Random.Range(0, 99999);
 
         Renderer renderer = GetComponent<Renderer>();
         renderer.material.mainTexture = perlinNoiseTexture;
