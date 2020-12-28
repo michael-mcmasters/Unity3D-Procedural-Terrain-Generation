@@ -42,7 +42,7 @@ public class TerrainGenerator : MonoBehaviour
     public float MaxZMapBounds { get => maxZMapBounds; }
 
 
-
+    // Used for terraforming. Won't log anything the first time the terrain generates.
     public bool debugChunksBeingRegenerated;
 
 
@@ -332,10 +332,8 @@ public class TerrainGenerator : MonoBehaviour
 
             if (debugChunksBeingRegenerated)
             {
-                //Debug.Log("Updating Chunk");
                 Vector3 centerOfChunkPos = VecCalc.TransformPoint(chunksToUpdate[c].gameObject, new Vector3(chunkWidth * 0.5f, 0, chunkLength * 0.5f));
                 DebugExtension.DebugWireSphere(centerOfChunkPos, Color.red, 4, 0.1f);
-                //DebugExtension.DrawBounds(new Bounds(centerOfChunkPos, new Vector3(chunkWidth, 100, chunkLength)));
             }
         }
     }

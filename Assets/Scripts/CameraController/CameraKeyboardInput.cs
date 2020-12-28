@@ -116,9 +116,18 @@ namespace CameraController
 
                     Vector3 lastMousePosition = cm.ScreenToPlanePosition(mousePositionLastFrame);
                     Vector3 currentMousePosition = cm.ScreenToPlanePosition(Input.mousePosition);
-                    Vector3 newCameraPosition = lastMousePosition - currentMousePosition;
+                    Vector3 newPosDirectionAndDistance = lastMousePosition - currentMousePosition;
+                    
+                    Vector3 newCameraPosition = transform.position;
+                    newCameraPosition.x += newPosDirectionAndDistance.x;
+                    newCameraPosition.z += newPosDirectionAndDistance.z;
+                    
+                    Vector3 newOrbitPoint = cm.ConvertNewPositionToOrbitPoint(newCameraPosition);
+                    if (cm.CheckIfOrbitPointInBounds(newOrbitPoint))
+                    {
+                        transform.position = newCameraPosition;
+                    }
 
-                    transform.Translate(newCameraPosition, Space.World);
                 }
 
                 if (Input.GetMouseButtonUp(0))
