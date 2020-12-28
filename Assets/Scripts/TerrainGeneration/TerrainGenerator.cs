@@ -17,7 +17,7 @@ public class TerrainGenerator : MonoBehaviour
     public bool useHeightMapTexture;
     public bool usePerlinNoise;
     public float noise = 4;
-    public float perlinHeightMultiplyer = 6;
+    public float perlinHeightMultiplyer = 20;
 
 
 

@@ -270,9 +270,9 @@ MonoBehaviour:
     type: 3}
   HeightMapTexture: {fileID: 0}
   useHeightMapTexture: 0
-  usePerlinNoise: 0
+  usePerlinNoise: 1
   noise: 4
-  perlinHeightMultiplyer: 6
+  perlinHeightMultiplyer: 20
   terrainWidth: 256
   terrainLength: 256
   chunkWidth: 16
@@ -429,8 +429,8 @@ MonoBehaviour:
   lowestAllowedRotationY: 20
   maxAllowedZoom: 150
   minAllowedZoom: 60
-  dragEndOfRoad_EdgeScreenInputRange: 40
-  dragEndOfRoad_EdgeScreenPanSpeed: 0.3
+  edgeOfScreenPanRange: 40
+  edgeOfScreenPanSpeed: 0.3
   allowDragToPan: 1
   debug_ignoreRotationBoundaries: 0
   debug_ignoreZoomBoundaries: 0
@@ -456,11 +456,8 @@ MonoBehaviour:
   smoothRotation: 1
   invertHorizontalRotation: 0
   invertVerticalRotation: 0
-  rotationX: 0
-  rotationY: 0
   amountToZoom: 8
   smoothZoom: 1
-  cameraPositionLastFrame: {x: 0, y: 0, z: 0}
 --- !u!1 &1779067594
 GameObject:
   m_ObjectHideFlags: 0
