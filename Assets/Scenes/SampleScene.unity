@@ -269,7 +269,7 @@ MonoBehaviour:
   cubeCollider: {fileID: 1951501005577850257, guid: 45efeb91d299ee34ea49fee3824e4814,
     type: 3}
   HeightMapTexture: {fileID: 0}
-  useHeightMapTexture: 0
+  useHeightMapTexture: 1
   usePerlinNoise: 1
   noise: 4
   perlinHeightMultiplyer: 20
@@ -330,8 +330,8 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0.8509804, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
