@@ -12,16 +12,12 @@ public class TerrainGenerator : MonoBehaviour
     public GameObject cubeCollider;
     public event Action UpdateCollidersEvent;
 
-
     public Texture2D HeightMapTexture;
     public bool useHeightMapTexture;
     public bool usePerlinNoise;
     public float noise = 4;
     public float perlinHeightMultiplyer = 20;
 
-
-
-    // 256x256 is good size
     public int terrainWidth = 32;
     public int terrainLength = 32;
     public int chunkWidth = 16;
@@ -31,7 +27,6 @@ public class TerrainGenerator : MonoBehaviour
     private float maxXMapBounds;
     private float minZMapBounds;
     private float maxZMapBounds;
-
 
     private Voxel[,] voxels;
     public static Voxel[,] Voxels { get => TerrainGenerator.Instance.voxels; }
@@ -44,10 +39,6 @@ public class TerrainGenerator : MonoBehaviour
 
     // Used for terraforming. Won't log anything the first time the terrain generates.
     public bool debugChunksBeingRegenerated;
-
-
-
-
 
 
 
@@ -65,11 +56,6 @@ public class TerrainGenerator : MonoBehaviour
 
 
 
-
-
-
-
-
     protected void Awake()
     {
         if (terrainWidth % chunkWidth != 0)
@@ -81,10 +67,6 @@ public class TerrainGenerator : MonoBehaviour
 
         SetMapBounds();
     }
-
-
-
-
 
 
 
@@ -149,15 +131,6 @@ public class TerrainGenerator : MonoBehaviour
         voxel = Voxels[0, 0];
         return false;
     }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -230,11 +203,6 @@ public class TerrainGenerator : MonoBehaviour
 
 
 
-
-
-
-
-
     // The map boundaries that player is allowed to build and move camera inside of.
     private void SetMapBounds()
     {
@@ -243,15 +211,6 @@ public class TerrainGenerator : MonoBehaviour
         minZMapBounds = transform.position.z;
         maxZMapBounds = transform.position.z + terrainLength * ChunkPrefab.transform.localScale.z;
     }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -317,7 +276,6 @@ public class TerrainGenerator : MonoBehaviour
 
 
 
-
     private void UpdateChunks(List<Chunk> chunksToUpdate)
     {
         List<Chunk> chunksAlreadyUpdated = new List<Chunk>();
@@ -353,29 +311,7 @@ public class TerrainGenerator : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // Used when connecting a game bject to the edge of a hill.
     private List<Vector3> GetSnapPoints(Collider terrainCube, int x, int z)
     {
         Vector3 centerOfCubePos = terrainCube.transform.position;
@@ -414,20 +350,6 @@ public class TerrainGenerator : MonoBehaviour
 
         return closestSnapPoint;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
