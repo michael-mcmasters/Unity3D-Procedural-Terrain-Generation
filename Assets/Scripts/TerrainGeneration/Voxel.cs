@@ -4,29 +4,20 @@ public struct Voxel
 {
     public Chunk chunk;
     public Vector3 position;
-    public bool isRamp;
 
-    // Also serve as ramp direction, because ramps only spawn if one cube is lower than it.
     public bool facingPrevRow;
     public bool facingNextRow;
     public bool facingLeft;
     public bool facingRight;
+    
     public bool facingNextLeft;
     public bool facingPrevLeft;
     public bool facingPrevRight;
     public bool facingNextRight;
 
 
-
-
-
-
-
-
-    /* Returns true if left voxel exists. False if not.
-       Subtract/add from x and z indexes to get next voxels in array */
-
-
+    // Returns true if left voxel exists. False if not.
+    // Subtract/add from x and z indexes to get next voxels in array
     public bool GetRightVoxel(out Voxel rightVoxel)
     {
         int x = (int)position.x + 1;
