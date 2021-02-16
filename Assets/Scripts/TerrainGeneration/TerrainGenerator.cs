@@ -58,8 +58,19 @@ public class TerrainGenerator : MonoBehaviour
 
     protected void Awake()
     {
+        generateTerrain();
+    }
+
+
+
+
+
+
+
+    public void generateTerrain()
+    {
         if (terrainWidth % chunkWidth != 0)
-            Debug.LogError("Terrain width must be perfectly divisible by chunk width. Same goes for length.");
+        Debug.LogError("Terrain width must be perfectly divisible by chunk width. Same goes for length.");
 
         HeightMapTexture = GetHeightMap();
         voxels = CreateVoxels(HeightMapTexture);
@@ -68,10 +79,6 @@ public class TerrainGenerator : MonoBehaviour
         SetMapBounds();
     }
 
-
-
-
-    // Returns true if position is inside of map boundaries.
     public bool PositionInMapBounds(Vector3 point)
     {
         bool positionInBound = true;
@@ -133,8 +140,6 @@ public class TerrainGenerator : MonoBehaviour
     }
 
 
-
-
     private Texture2D GetHeightMap()
     {
         if (useHeightMapTexture && HeightMapTexture != null)
@@ -182,21 +187,30 @@ public class TerrainGenerator : MonoBehaviour
         }
         return voxels;
     }
-
+    
     private void SpawnChunks()
     {
-        int spawnCounter = 0;
+        removeExistingChunks();
+        
+        int chunkNumber = 0;
         for (int z = 0; z < terrainLength; z += chunkLength)
         {
             for (int x = 0; x < terrainWidth; x += chunkWidth)
             {
                 GameObject ChunkObj = Instantiate(ChunkPrefab, new Vector3(x, 0, z), Quaternion.identity, transform);
-                ChunkObj.transform.name = ("Terrain Chunk" + spawnCounter);
+                ChunkObj.transform.name = "Terrain Chunk " + chunkNumber;
                 Chunk chunk = ChunkObj.GetComponent<Chunk>();
                 chunk.CreateChunk(chunkWidth, chunkLength);
 
-                spawnCounter++;
+                chunkNumber++;
             }
+        }
+    }
+
+    private void removeExistingChunks()
+    {
+        foreach (Transform child in transform) {
+            Destroy(child.gameObject);
         }
     }
 
