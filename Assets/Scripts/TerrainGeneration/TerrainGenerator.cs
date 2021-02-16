@@ -70,13 +70,19 @@ public class TerrainGenerator : MonoBehaviour
     public void generateTerrain()
     {
         if (terrainWidth % chunkWidth != 0)
-        Debug.LogError("Terrain width must be perfectly divisible by chunk width. Same goes for length.");
+            Debug.LogError("Terrain width must be perfectly divisible by chunk width. Same goes for length.");
 
         HeightMapTexture = GetHeightMap();
         voxels = CreateVoxels(HeightMapTexture);
         SpawnChunks();
 
         SetMapBounds();
+    }
+    
+    public void generateRandomTerrain() {
+        useHeightMapTexture = false;
+        usePerlinNoise = true;
+        generateTerrain();
     }
 
     public bool PositionInMapBounds(Vector3 point)
