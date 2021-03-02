@@ -30,3 +30,11 @@ The chunk the voxel belongs to and all neighboring chunks will regenerate.
 The reason for this is because only the sides of the blocks visible to the player are drawn. If a face is going to be covered by another block, there is no reason to draw it. But when moving a block, its neighbords need to be redrawn to make sure there are no holes in the terrain.
 
 To draw the cubes, a list of vertice coordinates are created, offset by the voxel's position. A list of triangles are then created in a clockwise order to make sure the normals are facing the player. The face would be invisible otherwise. And then finally a list of UVs are created to tell the vertices how to place the texture.
+
+## To run
+
+For this to work you must have [Unity and Unity Hub](https://unity3d.com/get-unity/download) installed.<br>
+
+Clone the repo `git clone https://github.com/michael-mcmasters/Unity3D-Procedural-Terrain-Generation.git`<br>
+In the cloned folder, go to and double click on Assets/Scenes/SampleScene.unity.<br>
+This should open the project in Unity. Click the play button in the top center to run the program.
