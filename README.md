@@ -1,4 +1,6 @@
-# Unity3D-Procedural-Terrain-Generation
+# About
+
+[![Gif](https://j.gifs.com/ANv7R9.gif)](https://www.youtube.com/watch?v=a14CbcjMOIs&feature=youtu.be)
 
 This is a small portion of a larger project I'm working on for the Oculus Virtual Reality family of systems. The project generates a random terrain at runtime with a button to generate a new one. Or you can give it a heightmap texture, [such as the one seen here](https://i0.wp.com/www.studica.com/blog/storage/2018/08/Heightmap.png?ssl=1), and it will generate a terain based off of that. The camera panning, zomming and rotations were created by me using only the Unity library.
 In the future I'll create terraforming, enabling you to click and drag along the terrain to raise and lower it.
@@ -8,7 +10,7 @@ I'm expecially proud of this project because it entered me into Facebook's Oculu
 ## How it works
 
 I use a multidimensional array to represent the x, y, and z coordinates of the terrain.
-I then split the terrain into chunks. So a 64x64 terrain would be made up of 16*16 chunks (as seen in the gif below).
+I then split the terrain into chunks. So a 64x64 terrain would be made up of 16*16 chunks (as seen in the gif above).
 Splitting the terrain into chunks improves performance because when terraforming (will be added soon), you only need to regenerate that one chunk instead of the entire terrain.
 
 The multidimensional array that makes up the terrain holds a collection of voxels (C# structs), which each represents one block.
@@ -26,7 +28,3 @@ The chunk the voxel belongs to and all neighboring chunks will regenerate.
 The reason for this is because only the sides of the blocks visible to the player are drawn. If a face is going to be covered by another block, there is no reason to draw it. But when moving a block, its neighbords need to be redrawn to make sure there are no holes in the terrain.
 
 To draw the cubes, a list of vertice coordinates are created, offset by the voxel's position. A list of triangles are then created in a clockwise order to make sure the normals are facing the player. The face would be invisible otherwise. And then finally a list of UVs are created to tell the vertices how to place the texture.
-
-## Gifs
-
-[![Gif](https://j.gifs.com/ANv7R9.gif)](https://www.youtube.com/watch?v=a14CbcjMOIs&feature=youtu.be)
