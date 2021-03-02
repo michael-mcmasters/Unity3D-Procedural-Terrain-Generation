@@ -1,6 +1,8 @@
-# About
+## Unity3D-Procedural-Terrain-Generation
 
 [![Gif](https://j.gifs.com/ANv7R9.gif)](https://www.youtube.com/watch?v=a14CbcjMOIs&feature=youtu.be)
+
+## About
 
 This is a small portion of a larger project I'm working on for the Oculus Virtual Reality family of systems. The project generates a random terrain at runtime with a button to generate a new one. Or you can give it a heightmap texture, [such as the one seen here](https://i0.wp.com/www.studica.com/blog/storage/2018/08/Heightmap.png?ssl=1), and it will generate a terain based off of that. The camera panning, zomming and rotations were created by me using only the Unity library.
 In the future I'll create terraforming, enabling you to click and drag along the terrain to raise and lower it.
